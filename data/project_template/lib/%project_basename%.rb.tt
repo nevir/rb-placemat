@@ -1,0 +1,6 @@
+# `<%= project_namespace %>` API
+# =<%= '=' * project_namespace.size %>=====
+
+module <%= project_namespace %>
+
+end

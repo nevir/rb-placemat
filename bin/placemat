@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+begin
+  require 'rubygems'
+  require 'placemat'
+rescue LoadError
+  begin
+    $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+    require 'placemat'
+  rescue LoadError => e
+    abort "Could not load Placemat! #{e}"
+  end
+end
+
+Placemat::CLI.start

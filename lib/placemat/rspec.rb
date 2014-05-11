@@ -1,0 +1,3 @@
+module Placemat::RSpec
+
+end

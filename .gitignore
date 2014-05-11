@@ -1,0 +1,10 @@
+# Don't lock down the environment in gems.
+Gemfile.lock
+.ruby-version
+.ruby-gemset
+
+# Build Artifacts
+*.gem
+*.rbc
+/pkg/
+/tmp/
