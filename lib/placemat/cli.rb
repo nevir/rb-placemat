@@ -56,6 +56,7 @@ class Placemat::CLI < Thor::Group
     template '.rspec'
     template 'Guardfile'
     template 'Rakefile'
+    template 'spec/spec_helper.rb', force: false
   end
 
   def inject_dev_placemat
@@ -84,8 +85,9 @@ class Placemat::CLI < Thor::Group
     end
   end
 
-  def template(source)
-    final_path = super(source, File.join(project_root, source), force: true)
+  def template(source, config={})
+    config = {force: true}.merge(config)
+    final_path = super(source, File.join(project_root, source), config)
     project_repo.add(final_path)
 
     final_path

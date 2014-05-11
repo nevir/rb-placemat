@@ -1,3 +1,5 @@
+require '<%= q(project_basename) %>'
+
 describe <%= project_namespace %> do
 
   it 'should exist' do

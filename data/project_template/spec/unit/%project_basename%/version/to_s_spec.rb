@@ -1,3 +1,5 @@
+require '<%= q(project_basename) %>/version'
+
 describe <%= project_namespace %>::Version, '#to_s' do
 
   it 'is a valid version string' do

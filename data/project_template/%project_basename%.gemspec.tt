@@ -1,4 +1,4 @@
-require File.expand_path('../lib/<%= q(project_basename) %>/version', __FILE__)
+load File.expand_path('../lib/<%= q(project_basename) %>/version.rb', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name     = '<%= q(project_basename) %>'

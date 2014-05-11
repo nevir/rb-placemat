@@ -1,3 +1,5 @@
+require '<%= q(project_basename) %>/version'
+
 describe <%= project_namespace %>::Version do
 
   it 'defines MAJOR' do

@@ -38,6 +38,7 @@ module Placemat::Guard
 
     def install_rspec_guard
       guard :rspec, :cmd => 'rspec --drb --drb-port 2727' do
+        watch(%r{^spec/.*_spec\.rb$})
         watch(%r{^lib/(.+)\.rb$}) { |m| specs_for_path(m[1]); }
       end
     end
