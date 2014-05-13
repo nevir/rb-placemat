@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'socket'
 
 module Placemat::Guard
   class << self
@@ -19,27 +20,33 @@ module Placemat::Guard
       install_rspec_guard
     end
 
-    def install_bundler_guard
+    def install_bundler_guard(&block)
       guard :bundler do
         watch(%r{^Gemfile(\..+)?$})
         watch(%r{^.+\.gemspec$})
+
+        instance_eval(&block) if block
       end
     end
 
-    def install_spork_guard
-      guard :spork, :rspec_port => 2727 do
+    def install_spork_guard(&block)
+      guard :spork, :rspec_port => spork_port do
         watch('Gemfile')
         watch('Gemfile.lock')
         watch('.rspec')
         watch(%r{^spec/.*_helper\.rb$})
         watch(%r{^spec/common/.*\.rb$})
+
+        instance_eval(&block) if block
       end
     end
 
-    def install_rspec_guard
-      guard :rspec, :cmd => 'rspec --drb --drb-port 2727' do
+    def install_rspec_guard(&block)
+      guard :rspec, :cmd => "rspec --drb --drb-port #{spork_port}" do
         watch(%r{^spec/.*_spec\.rb$})
-        watch(%r{^lib/(.+)\.rb$}) { |m| specs_for_path(m[1]); }
+        watch(%r{^lib/(.+)\.rb$}) { |m| specs_for_path(m[1]) }
+
+        instance_eval(&block) if block
       end
     end
 
@@ -47,7 +54,18 @@ module Placemat::Guard
       [
         "spec/unit/#{path}_spec.rb",
         Dir["spec/unit/#{path}/**/*_spec.rb"]
-      ].flatten.tap { |s| puts s.inspect }
+      ].flatten
+    end
+
+    def spork_port
+      @spork_port ||= begin
+        socket = Socket.new(:INET, :STREAM, 0)
+        socket.bind(Addrinfo.tcp("127.0.0.1", 0))
+        port = socket.local_address.ip_port
+        socket.close
+
+        port
+      end
     end
 
   end

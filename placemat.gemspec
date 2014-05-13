@@ -1,4 +1,9 @@
-require File.expand_path('../lib/placemat/version', __FILE__)
+# Grab the version string, and then clean up so that we have a clean slate when
+# requiring the full library down the line.
+load File.expand_path('../lib/placemat/version.rb', __FILE__)
+version_string = Placemat::Version.to_s
+::Placemat.send(:remove_const, :Version)
+::Object.send(:remove_const, :Placemat) if ::Placemat.constants.size == 0
 
 Gem::Specification.new do |gem|
   gem.name     = 'placemat'
@@ -8,7 +13,7 @@ Gem::Specification.new do |gem|
   gem.homepage = 'https://github.com/nevir/rb-placemat'
   gem.license  = 'MIT'
 
-  gem.version  = Placemat::Version.to_s
+  gem.version  = version_string
   gem.platform = Gem::Platform::RUBY
 
   gem.files         = Dir['{bin,data,lib,spec,tasks}/**/*', '*', '.gitignore']

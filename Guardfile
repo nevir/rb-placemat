@@ -1,25 +1,23 @@
-# Because the Guardfile can be reloaded; we cannot require it. For normal
-# Placemat users, a `require 'placemat/guard/init'` is just fine.
-load File.expand_path('../lib/placemat/guard/init.rb', __FILE__)
+# Because we bootstrap ourselves, we have to be careful to not (auto)require
+# placemat. Thus, we fake that environment.
+#
+# For normal Placemat users, a `require 'placemat/guard/init'` is just fine.
+module ::Placemat; end
+load File.expand_path('../lib/placemat/guard.rb', __FILE__)
 
-def reload_placemat!
-  # Note that we seem to have dangling references left; but they get cleared
-  # the *next* time, and the guard configuration properly reloads. So not a
-  # leak, but a little hard to reason about.
-  ::Object.send(:remove_const, :Placemat) if defined? ::Placemat
-
-  # We require Placemat everywhere else, and don't want to mess with that; so we
-  # have to forcefully reload Placemat's core here.
-  load File.expand_path("../lib/placemat/autoload_convention.rb", __FILE__)
-  load File.expand_path("../lib/placemat.rb", __FILE__)
-end
-
-watch("Guardfile") do
-  reload_placemat!
-end
-
-watch(%r{^lib/placemat/guard.*$}) do
-  # TODO: unload all of placemat!
-  reload_placemat!
+watch(%r{^lib/placemat/guard.*\.rb$}) do
   ::Guard.evaluator.reevaluate_guardfile
 end
+
+# Normally, a call to `Placemat::Guard.install_guards` is sufficient, but you
+# can also set up the guards individually, and provide additional watches:
+Placemat::Guard.install_bundler_guard
+
+Placemat::Guard.install_spork_guard do
+  watch(%r{^lib/placemat/rspec.*\.rb$})
+end
+
+Placemat::Guard.install_rspec_guard
+
+# Clean up our bootstrapping.
+::Object.send(:remove_const, :Placemat)

@@ -1,9 +1,13 @@
 require 'placemat'
 
-load Placemat::LIB_PATH.join('placemat', 'rspec', 'spec_helper.rb')
+Placemat::Spork.load_or_shim
 
-RSpec.configure do |config|
-  config.add_formatter :documentation
-  config.color = true
-  config.order = :random
+# load Placemat::LIB_PATH.join('placemat', 'rspec', 'spec_helper.rb')
+
+Spork.prefork do
+  Placemat::Rspec.set_default_configuration
+end
+
+Spork.each_run do
+
 end
