@@ -1,3 +1,6 @@
+# `CLI`
+# =====
+
 require 'git'
 require 'erb'
 require 'fileutils'
@@ -6,6 +9,8 @@ require 'thor/error'
 require 'thor/group'
 require 'thor/util'
 
+# The Placemat CLI tool is a project generator that builds new or updates
+# existing projects to make use of placemat.
 class Placemat::CLI < Thor::Group
   extend Placemat::AutoloadConvention
   include Thor::Actions
@@ -128,5 +133,4 @@ class Placemat::CLI < Thor::Group
       files
     end
   end
-
 end

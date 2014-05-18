@@ -3,8 +3,7 @@ require 'timeout'
 
 module Placemat::Rspec
   class << self
-
-    def default_configuration
+    def default_configuration # rubocop:disable MethodLength
       Placemat::Spork.load_or_shim
 
       ::Spork.prefork do
@@ -23,7 +22,7 @@ module Placemat::Rspec
       $LOAD_PATH << spec_root unless $LOAD_PATH.include? spec_root
     end
 
-    def set_default_configuration
+    def set_default_configuration # rubocop:disable MethodLength
       ::RSpec.configure do |config|
         config.add_formatter :documentation
         config.color = true
@@ -64,6 +63,5 @@ module Placemat::Rspec
       require 'coveralls'
       Coveralls.wear!
     end
-
   end
 end

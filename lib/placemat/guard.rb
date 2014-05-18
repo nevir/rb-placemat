@@ -14,7 +14,7 @@ module Placemat::Guard
       end
     end
 
-    def default_configuration
+    def default_configuration # rubocop:disable MethodLength
       install_bundler_guard
       install_spork_guard
       install_rspec_guard
@@ -60,13 +60,12 @@ module Placemat::Guard
     def spork_port
       @spork_port ||= begin
         socket = Socket.new(:INET, :STREAM, 0)
-        socket.bind(Addrinfo.tcp("127.0.0.1", 0))
+        socket.bind(Addrinfo.tcp('127.0.0.1', 0))
         port = socket.local_address.ip_port
         socket.close
 
         port
       end
     end
-
   end
 end

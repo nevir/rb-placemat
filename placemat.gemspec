@@ -17,8 +17,8 @@ Gem::Specification.new do |gem|
   gem.platform = Gem::Platform::RUBY
 
   gem.files         = Dir['{bin,data,lib,spec,tasks}/**/*', '*', '.gitignore']
-  gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^spec/})
+  gem.executables   = gem.files.grep(/^bin\//).map { |f| File.basename(f) }
+  gem.test_files    = gem.files.grep(/^spec\//)
   gem.require_paths = ['lib']
 
   gem.add_runtime_dependency 'bundler',                 '~> 1.6'
@@ -37,6 +37,8 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'rake',                    '~> 10.3'
   gem.add_runtime_dependency 'rb-notifu',               '~> 0.0'
   gem.add_runtime_dependency 'rspec',                   '~> 2.14'
+  gem.add_runtime_dependency 'rubocop',                 '~> 0.21'
+  gem.add_runtime_dependency 'rubocop-rspec',           '~> 1.0.rc1'
   gem.add_runtime_dependency 'simplecov',               '~> 0.8'
   gem.add_runtime_dependency 'terminal-notifier-guard', '~> 1.5'
 end

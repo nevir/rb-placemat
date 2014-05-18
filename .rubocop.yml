@@ -1,0 +1,6 @@
+ClassAndModuleChildren:
+  Enabled: false
+
+Documentation:
+  Exclude:
+  - spec/*

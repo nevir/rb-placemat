@@ -1,5 +1,11 @@
-class Placemat::Project
+# `Project`
+# =========
 
+# Metadata about a Placemat-managed project.
+#
+# Note that some projects define multiple gems (for instance, Rails) within the
+# same repo.
+class Placemat::Project
   def self.current
     @current ||= new(Dir.pwd)
   end
@@ -33,5 +39,4 @@ class Placemat::Project
       require Pathname.new(path).relative_path_from(lib_root).to_s[0...-3]
     end
   end
-
 end

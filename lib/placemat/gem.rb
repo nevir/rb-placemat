@@ -1,6 +1,9 @@
+# `Gem`
+# =====
 require 'bundler'
 require 'pathname'
 
+# Metadata about a gem that this project builds.
 class Placemat::Gem
   def initialize(gemspec_path)
     @path = Pathname.new(gemspec_path).expand_path

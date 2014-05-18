@@ -14,7 +14,11 @@ namespace :test do
       mutate_scope = "::#{gem.root_namespace}#{mutate_scope}"
     end
 
-    Mutant::CLI.run(['--use', 'rspec', mutate_scope])
+    begin
+      Mutant::CLI.run(['--use', 'rspec', mutate_scope])
+    rescue NameError
+      fail "Unable to find any symbols matching #{mutate_scope}"
+    end
   end
 
 end
