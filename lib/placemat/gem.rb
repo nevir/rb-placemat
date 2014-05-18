@@ -21,4 +21,28 @@ class Placemat::Gem
   def to_s
     spec.full_name
   end
+
+  def lib_root
+    path.dirname.join('lib', name)
+  end
+
+  def lib_files
+    @lib_files ||= Dir.glob(lib_root.join('**', '*.rb'))
+  end
+
+  def root_namespace
+    @root_namespace ||= begin
+      flat_name = name.gsub('_', '').downcase
+      matcher = /(?:module|class)\s+(#{flat_name})/i
+
+      match = nil
+      lib_files.each do |path|
+        match = Placemat::Util.line_matching(path, matcher)
+        break if match
+      end
+
+      fail "Couldn't detect gem namespace for #{name}!" unless match
+      match[1]
+    end
+  end
 end

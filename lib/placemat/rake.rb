@@ -5,7 +5,7 @@ module Placemat::Rake
 
     def default_configuration
       # Ideally, we wouldn't need to run bundler/setup until after rake begins
-      # execution (for quick help); but it's a real pain (rspec & other
+      # execution (for quick help); but it's a real pain (due to rspec & other
       # externally loaded tasks).
       require 'bundler/setup'
 

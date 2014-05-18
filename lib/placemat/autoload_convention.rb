@@ -14,9 +14,11 @@ module Placemat
     # so here's a thread-unsafe poor man's solution.
     def const_missing(sym)
       full_sym   = "#{name}::#{sym}"
+      # Duplicates the logic from `Placemat::Util#underscore`, to avoid extra
+      # dependencies.
       path_parts = full_sym.split('::').map do |part|
-        part.gsub! /([^A-Z])([A-Z]+)/,       '\\1_\\2' # OneTwo -> One_Two
-        part.gsub! /([A-Z]+)([A-Z][^A-Z]+)/, '\\1_\\2' # ABCOne -> ABC_One
+        part.gsub! /([^A-Z])([A-Z]+)/,          '\\1_\\2' # OneTwo -> One_Two
+        part.gsub! /([A-Z]{2,})([A-Z][^A-Z]+)/, '\\1_\\2' # ABCOne -> ABC_One
 
         part.downcase
       end

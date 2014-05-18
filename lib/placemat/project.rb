@@ -24,8 +24,12 @@ class Placemat::Project
     @lib_root ||= @root.join('lib')
   end
 
+  def lib_files
+    @lib_files ||= gems.map(&:lib_files).flatten
+  end
+
   def preload_lib
-    Dir.glob(lib_root.join('**', '*.rb')).each do |path|
+    lib_files.each do |path|
       require Pathname.new(path).relative_path_from(lib_root).to_s[0...-3]
     end
   end

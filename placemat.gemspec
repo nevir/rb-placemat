@@ -31,6 +31,8 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'guard-spork',             '~> 1.5'
   gem.add_runtime_dependency 'launchy',                 '~> 2.4'
   gem.add_runtime_dependency 'libnotify',               '~> 0.8'
+  gem.add_runtime_dependency 'mutant',                  '~> 0.5'
+  gem.add_runtime_dependency 'mutant-rspec',            '~> 0.5'
   gem.add_runtime_dependency 'pry',                     '~> 0.9'
   gem.add_runtime_dependency 'rake',                    '~> 10.3'
   gem.add_runtime_dependency 'rb-notifu',               '~> 0.0'
