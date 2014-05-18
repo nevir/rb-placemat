@@ -1,2 +1,3 @@
 $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
-require 'placemat/rake/init'
+require 'placemat'
+Placemat::Rake.default_configuration

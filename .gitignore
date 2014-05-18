@@ -6,5 +6,9 @@ Gemfile.lock
 # Build Artifacts
 *.gem
 *.rbc
+/coverage/
 /pkg/
 /tmp/
+
+# OS Junk
+.DS_Store

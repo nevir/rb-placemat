@@ -23,7 +23,25 @@ module Placemat
 
       load "#{File.join(path_parts)}.rb"
 
-      const_defined?(sym) ? const_get(sym) : super
+      return super unless const_defined? sym
+      autoloaded_constants << sym
+
+      const_get(sym)
+    end
+
+    def autoloaded_constants
+      @autoloaded_constants ||= []
+    end
+
+    def reload!
+      autoloaded_constants.each { |s| remove_const(s) }
+      @autoloaded_constants = []
+
+      # Reload ourselves, as well.
+      if self == ::Placemat
+        load __FILE__
+        extend ::Placemat::AutoloadConvention
+      end
     end
   end
 end

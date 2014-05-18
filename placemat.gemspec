@@ -1,9 +1,9 @@
-# Grab the version string, and then clean up so that we have a clean slate when
-# requiring the full library down the line.
-load File.expand_path('../lib/placemat/version.rb', __FILE__)
-version_string = Placemat::Version.to_s
-::Placemat.send(:remove_const, :Version)
-::Object.send(:remove_const, :Placemat) if ::Placemat.constants.size == 0
+# Grab the version string, but don't pollute the global namespace so that
+# dependents are not confused about a partially-loaded library.
+version_path = File.expand_path('../lib/placemat/version.rb', __FILE__)
+version_string = Module.new.tap do |anon_namespace|
+  anon_namespace.module_eval(File.read(version_path), version_path)
+end::Placemat::Version.to_s
 
 Gem::Specification.new do |gem|
   gem.name     = 'placemat'
@@ -29,10 +29,12 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'guard-cucumber',          '~> 1.4'
   gem.add_runtime_dependency 'guard-rspec',             '~> 4.2'
   gem.add_runtime_dependency 'guard-spork',             '~> 1.5'
+  gem.add_runtime_dependency 'launchy',                 '~> 2.4'
   gem.add_runtime_dependency 'libnotify',               '~> 0.8'
   gem.add_runtime_dependency 'pry',                     '~> 0.9'
   gem.add_runtime_dependency 'rake',                    '~> 10.3'
   gem.add_runtime_dependency 'rb-notifu',               '~> 0.0'
   gem.add_runtime_dependency 'rspec',                   '~> 2.14'
+  gem.add_runtime_dependency 'simplecov',               '~> 0.8'
   gem.add_runtime_dependency 'terminal-notifier-guard', '~> 1.5'
 end

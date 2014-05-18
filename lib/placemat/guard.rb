@@ -14,7 +14,7 @@ module Placemat::Guard
       end
     end
 
-    def install_guards
+    def default_configuration
       install_bundler_guard
       install_spork_guard
       install_rspec_guard
@@ -30,7 +30,7 @@ module Placemat::Guard
     end
 
     def install_spork_guard(&block)
-      guard :spork, :rspec_port => spork_port do
+      guard :spork, rspec_port: spork_port do
         watch('Gemfile')
         watch('Gemfile.lock')
         watch('.rspec')
@@ -42,7 +42,7 @@ module Placemat::Guard
     end
 
     def install_rspec_guard(&block)
-      guard :rspec, :cmd => "rspec --drb --drb-port #{spork_port}" do
+      guard :rspec, all_on_start: true, cmd: "rspec --drb --drb-port #{spork_port}" do
         watch(%r{^spec/.*_spec\.rb$})
         watch(%r{^lib/(.+)\.rb$}) { |m| specs_for_path(m[1]) }
 
