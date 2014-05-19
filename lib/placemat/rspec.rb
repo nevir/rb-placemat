@@ -1,6 +1,7 @@
 require 'rspec'
 require 'timeout'
 
+# RSpec related behavior.
 module Placemat::Rspec
   class << self
     def default_configuration # rubocop:disable MethodLength

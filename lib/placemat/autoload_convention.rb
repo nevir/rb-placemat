@@ -1,6 +1,3 @@
-# `AutoloadConvention`
-# ====================
-
 module Placemat
   # We adhere to a strict convention for the constants in this library:
   #
@@ -17,8 +14,8 @@ module Placemat
       # Duplicates the logic from `Placemat::Util#underscore`, to avoid extra
       # dependencies.
       path_parts = full_sym.split('::').map do |part|
-        part.gsub! /([^A-Z])([A-Z]+)/,          '\\1_\\2' # OneTwo -> One_Two
-        part.gsub! /([A-Z]{2,})([A-Z][^A-Z]+)/, '\\1_\\2' # ABCOne -> ABC_One
+        part.gsub!(/([^A-Z])([A-Z]+)/,          '\\1_\\2') # OneTwo -> One_Two
+        part.gsub!(/([A-Z]{2,})([A-Z][^A-Z]+)/, '\\1_\\2') # ABCOne -> ABC_One
 
         part.downcase
       end

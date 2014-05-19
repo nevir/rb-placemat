@@ -1,3 +1,4 @@
+# Rake related behavior.
 module Placemat::Rake
   class << self
     # A hack to make gems available to task files during load.

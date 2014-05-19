@@ -6,7 +6,9 @@ Gemfile.lock
 # Build Artifacts
 *.gem
 *.rbc
+/.yardoc/
 /coverage/
+/doc/
 /pkg/
 /tmp/
 

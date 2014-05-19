@@ -1,3 +1,4 @@
+# Miscellaneous utility methods that have no home elsewhere.
 module Placemat::Util
   class << self
     def symbol_to_path(value)
@@ -20,6 +21,13 @@ module Placemat::Util
       end
 
       nil
+    end
+
+    def files_under(base_path, match_mode = File::FNM_DOTMATCH)
+      matches = Dir.glob(File.join(base_path, '**', '*'), match_mode)
+      matches.reject! { |f| File.directory? f }
+
+      matches
     end
   end
 end

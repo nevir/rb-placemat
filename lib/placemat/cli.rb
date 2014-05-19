@@ -1,6 +1,3 @@
-# `CLI`
-# =====
-
 require 'git'
 require 'erb'
 require 'fileutils'
@@ -44,7 +41,7 @@ class Placemat::CLI < Thor::Group
 
   def check_dirty_status
     if project_repo_dirty?
-      raise(
+      fail(
         Thor::Error,
         'Refusing to modify a dirty repo. Please commit or stash your changes.'
       )
@@ -74,24 +71,24 @@ class Placemat::CLI < Thor::Group
   def commit_changes
     project_repo.commit("Placemat Configuration (v#{Placemat::Version})")
     say_status 'commit', "#{relative_project_root} (git changes)"
-  rescue Git::GitExecuteError
+  rescue Git::GitExecuteError # rubocop:disable HandleExceptions
     # Nothing to commit.
   end
 
   private
 
-  def initialize(args=[], local_options=[], config={}, &block)
+  def initialize(args = [], local_options = [], config = {}, &block)
     super(args, local_options, config, &block)
 
-    if !@path
+    unless @path
       self.class.help(shell)
-      fail Thor::Error, 'A path or ProjectName is required. ' +
+      fail Thor::Error, 'A path or ProjectName is required. ' \
         'Perhaps you want to run `placemat .`?'
     end
   end
 
-  def template(source, config={})
-    config = {force: true}.merge(config)
+  def template(source, config = {})
+    config = { force: true }.merge(config)
     final_path = super(source, File.join(project_root, source), config)
     project_repo.add(final_path)
 
@@ -120,17 +117,10 @@ class Placemat::CLI < Thor::Group
 
   def all_project_files
     @all_project_files ||= begin
-      files = []
-      source_paths.each do |source_path|
-        some_files = Dir.glob(File.join(source_path, '**', '*'), File::FNM_DOTMATCH)
-        some_files.reject! { |f| File.directory? f }
-        some_files.map! do |file|
-          file[(source_path.to_s.size + 1)..-1].sub(/\.tt$/, '')
-        end
-        files += some_files
-      end
-
-      files
+      source_paths.map do |source_path|
+        files = Placemat::Util.files_under(source_path)
+        files.map { |f| f[(source_path.to_s.size + 1)..-1].sub(/\.tt$/, '') }
+      end.flatten
     end
   end
 end

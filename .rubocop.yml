@@ -1,6 +1,13 @@
+AllCops:
+  Exclude:
+  - data/**/*
+
 ClassAndModuleChildren:
   Enabled: false
 
 Documentation:
   Exclude:
-  - spec/*
+  - spec/**/*
+
+TrivialAccessors:
+  AllowPredicates: true

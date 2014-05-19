@@ -1,3 +1,4 @@
+# Spork-related behavior.
 module Placemat::Spork
   class << self
     def load_or_shim

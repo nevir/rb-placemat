@@ -1,5 +1,3 @@
-# `Gem`
-# =====
 require 'bundler'
 require 'pathname'
 
@@ -35,9 +33,7 @@ class Placemat::Gem
 
   def root_namespace
     @root_namespace ||= begin
-      flat_name = name.gsub('_', '').downcase
-      matcher = /(?:module|class)\s+(#{flat_name})/i
-
+      matcher = /(?:module|class)\s+(#{name.gsub('_', '').downcase})/i
       match = nil
       lib_files.each do |path|
         match = Placemat::Util.line_matching(path, matcher)

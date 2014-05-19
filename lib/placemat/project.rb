@@ -1,6 +1,3 @@
-# `Project`
-# =========
-
 # Metadata about a Placemat-managed project.
 #
 # Note that some projects define multiple gems (for instance, Rails) within the

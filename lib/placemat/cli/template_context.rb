@@ -1,5 +1,5 @@
+# Helper methods for use within project template files.
 module Placemat::CLI::TemplateContext
-
   # Requires that project_repo is set! See `Placemat::CLI#initialize_repo`.
   attr_accessor :project_repo
 
@@ -46,5 +46,4 @@ module Placemat::CLI::TemplateContext
   def q(string)
     string.gsub('\'', '\\\'')
   end
-
 end

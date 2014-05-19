@@ -1,6 +1,3 @@
-# Current Version
-# ===============
-
 module Placemat
   # Version information for Placemat.
   module Version

@@ -1,6 +1,7 @@
 require 'forwardable'
 require 'socket'
 
+# Guard related behavior.
 module Placemat::Guard
   class << self
     extend Forwardable
@@ -22,8 +23,8 @@ module Placemat::Guard
 
     def install_bundler_guard(&block)
       guard :bundler do
-        watch(%r{^Gemfile(\..+)?$})
-        watch(%r{^.+\.gemspec$})
+        watch(/^Gemfile(\..+)?$/)
+        watch(/^.+\.gemspec$/)
 
         instance_eval(&block) if block
       end
@@ -34,7 +35,7 @@ module Placemat::Guard
         watch('Gemfile')
         watch('Gemfile.lock')
         watch('.rspec')
-        watch(%r{^spec/.*_helper\.rb$})
+        watch(/^spec\/.*_helper\.rb$/)
         watch(%r{^spec/common/.*\.rb$})
 
         instance_eval(&block) if block
@@ -42,12 +43,19 @@ module Placemat::Guard
     end
 
     def install_rspec_guard(&block)
-      guard :rspec, all_on_start: true, cmd: "rspec --drb --drb-port #{spork_port}" do
-        watch(%r{^spec/.*_spec\.rb$})
-        watch(%r{^lib/(.+)\.rb$}) { |m| specs_for_path(m[1]) }
+      guard :rspec, rspec_options do
+        watch(/^spec\/.*_spec\.rb$/)
+        watch(/^lib\/(.+)\.rb$/) { |m| specs_for_path(m[1]) }
 
         instance_eval(&block) if block
       end
+    end
+
+    def rspec_options
+      {
+        all_on_start: true,
+        cmd: "rspec --drb --drb-port #{spork_port}"
+      }
     end
 
     def specs_for_path(path)
