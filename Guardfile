@@ -1,7 +1,10 @@
-require 'placemat'
+if defined? Placemat
+  Placemat.reload!
+else
+  require 'placemat'
+end
 
 watch(%r{^lib/placemat/guard.*\.rb$}) do
-  Placemat.reload!
   ::Guard.evaluator.reevaluate_guardfile
 end
 
@@ -14,3 +17,5 @@ Placemat::Guard.install_spork_guard do
 end
 
 Placemat::Guard.install_rspec_guard
+
+Placemat::Guard.install_rubocop_guard

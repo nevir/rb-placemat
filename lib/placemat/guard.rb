@@ -19,6 +19,7 @@ module Placemat::Guard
       install_bundler_guard
       install_spork_guard
       install_rspec_guard
+      install_rubocop_guard
     end
 
     def install_bundler_guard(&block)
@@ -39,6 +40,17 @@ module Placemat::Guard
         watch(%r{^spec/common/.*\.rb$})
 
         instance_eval(&block) if block
+      end
+    end
+
+    def spork_port
+      @spork_port ||= begin
+        socket = Socket.new(:INET, :STREAM, 0)
+        socket.bind(Addrinfo.tcp('127.0.0.1', 0))
+        port = socket.local_address.ip_port
+        socket.close
+
+        port
       end
     end
 
@@ -65,14 +77,16 @@ module Placemat::Guard
       ].flatten
     end
 
-    def spork_port
-      @spork_port ||= begin
-        socket = Socket.new(:INET, :STREAM, 0)
-        socket.bind(Addrinfo.tcp('127.0.0.1', 0))
-        port = socket.local_address.ip_port
-        socket.close
+    def install_rubocop_guard(&block)
+      guard :rubocop, all_on_start: true, cli: %w(--format clang) do
+        watch('.rubocop.yml') { '.' }
 
-        port
+        watch(/.+\.(rb|rake|gemspec)$/)
+        watch('Rakefile')
+        watch('Gemfile')
+        watch('Guardfile')
+
+        instance_eval(&block) if block
       end
     end
   end

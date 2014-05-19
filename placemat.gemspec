@@ -29,6 +29,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'guard-cucumber',          '~> 1.4'
   gem.add_runtime_dependency 'guard-rspec',             '~> 4.2'
   gem.add_runtime_dependency 'guard-spork',             '~> 1.5'
+  gem.add_runtime_dependency 'guard-rubocop',           '~> 1.1'
   gem.add_runtime_dependency 'launchy',                 '~> 2.4'
   gem.add_runtime_dependency 'libnotify',               '~> 0.8'
   gem.add_runtime_dependency 'mutant',                  '~> 0.5'
