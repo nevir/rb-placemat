@@ -22,7 +22,7 @@ module Placemat::Guard
     def default_configuration # rubocop:disable MethodLength
       # TODO: Toggle rspec/spork/etc when test dirs are added/removed.
       install_bundler_guard
-      install_spork_guard
+      install_spork_guard  # spring or zeus
       install_rspec_guard
       install_cucumber_guard
       install_rubocop_guard

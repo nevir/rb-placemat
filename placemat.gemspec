@@ -38,6 +38,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'pry',                     '~> 0.9'
   gem.add_runtime_dependency 'rake',                    '~> 10.3'
   gem.add_runtime_dependency 'rb-notifu',               '~> 0.0'
+  gem.add_runtime_dependency 'spring',                  '~> 1.1'
   gem.add_runtime_dependency 'rspec',                   '~> 2.14'
   gem.add_runtime_dependency 'rubocop',                 '~> 0.21'
   gem.add_runtime_dependency 'rubocop-rspec',           '~> 1.0.rc1'
