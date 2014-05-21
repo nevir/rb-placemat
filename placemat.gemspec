@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.version  = version_string
   gem.platform = Gem::Platform::RUBY
 
+  # TODO: Don't suck in Gemfile.lock, etc.
   gem.files         = Dir['{bin,data,lib,spec,tasks}/**/*', '*', '.gitignore']
   gem.executables   = gem.files.grep(/^bin\//).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(/^spec\//)

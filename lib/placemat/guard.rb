@@ -78,7 +78,7 @@ module Placemat::Guard
     end
 
     def install_rubocop_guard(&block)
-      guard :rubocop, all_on_start: true, cli: %w(--format clang) do
+      guard :rubocop, rubocop_options do
         watch('.rubocop.yml') { '.' }
 
         watch(/.+\.(rb|rake|gemspec)$/)
@@ -88,6 +88,13 @@ module Placemat::Guard
 
         instance_eval(&block) if block
       end
+    end
+
+    def rubocop_options
+      {
+        all_on_start: true,
+        cli: %w(--format clang --require rubocop-rspec)
+      }
     end
   end
 end
