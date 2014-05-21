@@ -19,8 +19,8 @@ module Placemat::Rspec
     end
 
     def configure_environment
-      spec_root = Placemat::Project.current.spec_root.to_s
-      $LOAD_PATH << spec_root unless $LOAD_PATH.include? spec_root
+      rspec_root = Placemat::Project.current.rspec_root.to_s
+      $LOAD_PATH << rspec_root unless $LOAD_PATH.include? rspec_root
     end
 
     def set_default_configuration # rubocop:disable MethodLength
@@ -45,9 +45,9 @@ module Placemat::Rspec
     def load_shared_behavior
       configure_environment
 
-      spec_root = Placemat::Project.current.spec_root
+      rspec_root = Placemat::Project.current.rspec_root
       # Shuffle to ensure that we don't have weird dependency ordering.
-      Dir.glob(spec_root.join('shared', '**', '*.rb')).shuffle.each do |helper|
+      Dir.glob(rspec_root.join('shared', '**', '*.rb')).shuffle.each do |helper|
         require require "common/#{File.basename(helper, '.rb')}"
       end
     end

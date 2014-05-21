@@ -15,7 +15,12 @@ module Placemat::Guard
       end
     end
 
+    def project
+      Placemat::Project.current
+    end
+
     def default_configuration # rubocop:disable MethodLength
+      # TODO: Toggle rspec/spork/etc when test dirs are added/removed.
       install_bundler_guard
       install_spork_guard
       install_rspec_guard
@@ -32,6 +37,8 @@ module Placemat::Guard
     end
 
     def install_spork_guard(&block)
+      return unless project.rspec? || project.cucumber?
+
       guard :spork, rspec_port: spork_port do
         watch('Gemfile')
         watch('Gemfile.lock')
@@ -55,6 +62,8 @@ module Placemat::Guard
     end
 
     def install_rspec_guard(&block)
+      return unless project.rspec?
+
       guard :rspec, rspec_options do
         watch(/^spec\/.*_spec\.rb$/)
         watch(/^lib\/(.+)\.rb$/) { |m| specs_for_path(m[1]) }

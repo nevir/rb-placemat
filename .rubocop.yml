@@ -11,3 +11,7 @@ Documentation:
 
 TrivialAccessors:
   AllowPredicates: true
+
+# TODO: Isn't this already default?
+LineLength:
+  Max: 80

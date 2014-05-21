@@ -19,8 +19,20 @@ class Placemat::Project
     end
   end
 
-  def spec_root
-    @spec_root ||= @root.join('spec')
+  def rspec_root
+    @rspec_root ||= @root.join('spec')
+  end
+
+  def rspec?
+    rspec_root.join('spec_helper.rb').exist?
+  end
+
+  def cucumber_root
+    @cucumber_root ||= @root.join('features')
+  end
+
+  def cucumber?
+    cucumber_root.join('support', 'env.rb').exist?
   end
 
   def lib_root
