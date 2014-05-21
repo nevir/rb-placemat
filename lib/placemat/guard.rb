@@ -24,6 +24,7 @@ module Placemat::Guard
       install_bundler_guard
       install_spork_guard
       install_rspec_guard
+      install_cucumber_guard
       install_rubocop_guard
     end
 
@@ -39,7 +40,7 @@ module Placemat::Guard
     def install_spork_guard(&block)
       return unless project.rspec? || project.cucumber?
 
-      guard :spork, rspec_port: spork_port do
+      guard :spork, rspec_port: rspec_port do
         watch('Gemfile')
         watch('Gemfile.lock')
         watch('.rspec')
@@ -47,17 +48,6 @@ module Placemat::Guard
         watch(%r{^spec/common/.*\.rb$})
 
         instance_eval(&block) if block
-      end
-    end
-
-    def spork_port
-      @spork_port ||= begin
-        socket = Socket.new(:INET, :STREAM, 0)
-        socket.bind(Addrinfo.tcp('127.0.0.1', 0))
-        port = socket.local_address.ip_port
-        socket.close
-
-        port
       end
     end
 
@@ -72,10 +62,14 @@ module Placemat::Guard
       end
     end
 
+    def rspec_port
+      @rspec_port ||= Placemat::Util.free_port
+    end
+
     def rspec_options
       {
         all_on_start: true,
-        cmd: "rspec --drb --drb-port #{spork_port}"
+        cmd: "rspec --drb --drb-port #{rspec_port}"
       }
     end
 
@@ -84,6 +78,25 @@ module Placemat::Guard
         "spec/unit/#{path}_spec.rb",
         Dir["spec/unit/#{path}/**/*_spec.rb"]
       ].flatten
+    end
+
+    def install_cucumber_guard(&block)
+      guard :cucumber, cucumber_options do
+        watch(%r{^features/.+\.feature$})
+        watch(%r{^features/support/.+$})                      { 'features' }
+        watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { 'features' }
+      end
+    end
+
+    def cucumber_port
+      @cucumber_port ||= Placemat::Util.free_port
+    end
+
+    def cucumber_options
+      {
+        all_on_start: true,
+        cli: "--drb --port #{cucumber_port}"
+      }
     end
 
     def install_rubocop_guard(&block)

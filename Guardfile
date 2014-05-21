@@ -15,4 +15,5 @@ Placemat::Guard.install_spork_guard do
   watch(%r{^lib/placemat/rspec.*\.rb$})
 end
 Placemat::Guard.install_rspec_guard
+Placemat::Guard.install_cucumber_guard
 Placemat::Guard.install_rubocop_guard
