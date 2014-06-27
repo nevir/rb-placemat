@@ -61,14 +61,16 @@ module Placemat::Guard
       [
         "spec/unit/#{path}_spec.rb",
         Dir["spec/unit/#{path}/**/*_spec.rb"]
-      ].flatten
+      ].flatten.uniq
     end
 
     def install_cucumber_guard(&block)
       guard :cucumber, cucumber_options do
-        watch(%r{^features/.+\.feature$})
+        watch(/^features\/.+\.feature$/)
         watch(%r{^features/support/.+$})                      { 'features' }
         watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { 'features' }
+
+        instance_eval(&block) if block
       end
     end
 

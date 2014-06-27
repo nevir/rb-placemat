@@ -40,12 +40,11 @@ class Placemat::CLI < Thor::Group
   end
 
   def check_dirty_status
-    if project_repo_dirty?
-      fail(
-        Thor::Error,
-        'Refusing to modify a dirty repo. Please commit or stash your changes.'
-      )
-    end
+    return unless project_repo_dirty?
+    fail(
+      Thor::Error,
+      'Refusing to modify a dirty repo. Please commit or stash your changes.'
+    )
   end
 
   def generate_new_project

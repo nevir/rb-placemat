@@ -24,7 +24,6 @@ module Placemat::Rspec
         config.add_formatter :documentation
         config.color = true
         config.order = :random
-        config.treat_symbols_as_metadata_keys_with_true_values = true
 
         # We enforce expect(...) style syntax to avoid mucking around in Core
         config.expect_with :rspec do |c|

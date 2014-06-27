@@ -9,6 +9,9 @@ Documentation:
   Exclude:
   - spec/**/*
 
+GuardClause:
+  Enabled: false
+
 TrivialAccessors:
   AllowPredicates: true
 

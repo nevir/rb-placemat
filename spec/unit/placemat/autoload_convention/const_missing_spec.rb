@@ -50,7 +50,7 @@ describe Placemat::AutoloadConvention, '#const_missing' do
   # Utility
 
   def expect_load(path)
-    namespace.should_receive(:load).with(path).and_call_original
+    expect(namespace).to receive(:load).with(path).and_call_original
   end
 
 end
