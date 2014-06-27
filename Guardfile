@@ -3,9 +3,8 @@ if defined? Placemat
 else
   require 'placemat'
 end
+Placemat::Guard.default_configuration
 
 watch(%r{^lib/placemat/guard.*\.rb$}) do
   ::Guard.evaluator.reevaluate_guardfile
 end
-
-Placemat::Guard.default_configuration

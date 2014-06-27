@@ -21,7 +21,8 @@ module Placemat::Rspec
 
     def set_default_configuration # rubocop:disable MethodLength
       ::RSpec.configure do |config|
-        config.add_formatter :documentation
+        # TODO(nevir): Only when not in guard!
+        # config.add_formatter :documentation
         config.color = true
         config.order = :random
 
