@@ -19,10 +19,9 @@ module Placemat::Guard
       Placemat::Project.current
     end
 
-    def default_configuration # rubocop:disable MethodLength
-      # TODO: Toggle rspec/spork/etc when test dirs are added/removed.
+    def default_configuration
+      # TODO: Toggle rspec/cucumber/etc when test dirs are added/removed.
       install_bundler_guard
-      install_spork_guard  # spring or zeus
       install_rspec_guard
       install_cucumber_guard
       install_rubocop_guard
@@ -32,20 +31,6 @@ module Placemat::Guard
       guard :bundler do
         watch(/^Gemfile(\..+)?$/)
         watch(/^.+\.gemspec$/)
-
-        instance_eval(&block) if block
-      end
-    end
-
-    def install_spork_guard(&block)
-      return unless project.rspec? || project.cucumber?
-
-      guard :spork, rspec_port: rspec_port do
-        watch('Gemfile')
-        watch('Gemfile.lock')
-        watch('.rspec')
-        watch(/^spec\/.*_helper\.rb$/)
-        watch(%r{^spec/common/.*\.rb$})
 
         instance_eval(&block) if block
       end
@@ -68,8 +53,7 @@ module Placemat::Guard
 
     def rspec_options
       {
-        all_on_start: true,
-        cmd: "rspec --drb --drb-port #{rspec_port}"
+        all_on_start: true
       }
     end
 
@@ -94,8 +78,7 @@ module Placemat::Guard
 
     def cucumber_options
       {
-        all_on_start: true,
-        cli: "--drb --port #{cucumber_port}"
+        all_on_start: true
       }
     end
 

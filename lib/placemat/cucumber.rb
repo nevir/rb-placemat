@@ -1,9 +1,9 @@
 require 'cucumber'
 
+# Cucumber related behavior.
 module Placemat::Cucumber
   class << self
     def default_configuration # rubocop:disable MethodLength
-      Placemat::Spork.load_or_shim
     end
   end
 end

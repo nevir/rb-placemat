@@ -5,17 +5,13 @@ require 'timeout'
 module Placemat::Rspec
   class << self
     def default_configuration # rubocop:disable MethodLength
-      Placemat::Spork.load_or_shim
+      # TODO(nevir): prefork.
+      Placemat::Rspec.configure_environment
+      Placemat::Rspec.set_default_configuration
+      Placemat::Rspec.load_shared_behavior
 
-      ::Spork.prefork do
-        Placemat::Rspec.configure_environment
-        Placemat::Rspec.set_default_configuration
-        Placemat::Rspec.load_shared_behavior
-      end
-
-      ::Spork.each_run do
-        Placemat::Rspec.enable_coverage if ENV['COVERAGE']
-      end
+      # TODO(nevir): each_run.
+      Placemat::Rspec.enable_coverage if ENV['COVERAGE']
     end
 
     def configure_environment
