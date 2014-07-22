@@ -2,11 +2,20 @@ require 'forwardable'
 require 'socket'
 
 # Guard related behavior.
+#
+# TODO: Toggle rspec/cucumber/etc when test dirs are added/removed.
 module Placemat::Guard
   class << self
     extend Forwardable
 
     def_delegators :dsl, :guard, :watch
+
+    # Guards installed by default, and their order.
+    DEFAULT_GUARDS = [
+      :bundler,
+      :zeus,
+      :rspec
+    ]
 
     def dsl
       @dsl ||= begin
@@ -19,12 +28,15 @@ module Placemat::Guard
       Placemat::Project.current
     end
 
-    def default_configuration
-      # TODO: Toggle rspec/cucumber/etc when test dirs are added/removed.
-      install_bundler_guard
-      install_rspec_guard
-      install_cucumber_guard
-      install_rubocop_guard
+    def default_configuration(&block)
+      config = Placemat::Util::DSLConfigurator.new(&block)
+      DEFAULT_GUARDS.each do |guard|
+        install_sym = :"install_#{guard}_guard"
+        fail "Unknown guard #{guard}" unless respond_to? install_sym
+        next if config[guard] == :skip
+
+        send(install_sym, &config[guard])
+      end
     end
 
     def install_bundler_guard(&block)
@@ -32,6 +44,12 @@ module Placemat::Guard
         watch(/^Gemfile(\..+)?$/)
         watch(/^.+\.gemspec$/)
 
+        instance_eval(&block) if block
+      end
+    end
+
+    def install_zeus_guard(&block)
+      guard :zeus_placemat do
         instance_eval(&block) if block
       end
     end
@@ -47,12 +65,9 @@ module Placemat::Guard
       end
     end
 
-    def rspec_port
-      @rspec_port ||= Placemat::Util.free_port
-    end
-
     def rspec_options
       {
+        cmd: 'zeus rspec',
         all_on_start: true
       }
     end

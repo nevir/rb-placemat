@@ -1,5 +1,7 @@
 # Miscellaneous utility methods that have no home elsewhere.
 module Placemat::Util
+  extend Placemat::AutoloadConvention
+
   class << self
     def symbol_to_path(value)
       path_parts = value.split('::').map do |part|

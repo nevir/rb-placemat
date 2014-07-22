@@ -13,6 +13,10 @@ class Placemat::Project
 
   attr_reader :root
 
+  def env
+    (ENV['ENV'] || :development).to_sym
+  end
+
   def gems
     @gems ||= Dir.glob(root.join('*.gemspec')).map do |path|
       Placemat::Gem.new(path)
@@ -41,6 +45,13 @@ class Placemat::Project
 
   def lib_files
     @lib_files ||= gems.map(&:lib_files).flatten
+  end
+
+  def preload_dependencies(*environments)
+    environments << env if environments.size == 0
+
+    require 'bundler/setup'
+    Bundler.require(:default, *Array(environments))
   end
 
   def preload_lib

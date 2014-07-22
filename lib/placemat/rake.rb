@@ -4,11 +4,16 @@ module Placemat::Rake
     # A hack to make gems available to task files during load.
     attr_accessor :current_gem
 
-    def default_configuration # rubocop:disable MethodLength
+    def preload
       # Ideally, we wouldn't need to run bundler/setup until after rake begins
       # execution (for quick help); but it's a real pain (due to rspec & other
       # externally loaded tasks).
       require 'bundler/setup'
+      require 'rake'
+    end
+
+    def default_configuration # rubocop:disable MethodLength
+      preload
 
       gems = Placemat::Project.current.gems
       if gems.size == 1

@@ -4,14 +4,19 @@ require 'timeout'
 # RSpec related behavior.
 module Placemat::Rspec
   class << self
-    def default_configuration # rubocop:disable MethodLength
-      # TODO(nevir): prefork.
-      Placemat::Rspec.configure_environment
-      Placemat::Rspec.set_default_configuration
-      Placemat::Rspec.load_shared_behavior
+    def preload
+      require 'rspec'
+      require 'guard/rspec/formatter'
 
+      load rspec_root.join('spec_helper.rb')
+    end
+
+    def default_configuration # rubocop:disable MethodLength
+      configure_environment
+      set_default_configuration
+      load_shared_behavior
       # TODO(nevir): each_run.
-      Placemat::Rspec.enable_coverage if ENV['COVERAGE']
+      enable_coverage if ENV['COVERAGE']
     end
 
     def configure_environment
@@ -39,9 +44,6 @@ module Placemat::Rspec
     end
 
     def load_shared_behavior
-      configure_environment
-
-      rspec_root = Placemat::Project.current.rspec_root
       # Shuffle to ensure that we don't have weird dependency ordering.
       Dir.glob(rspec_root.join('shared', '**', '*.rb')).shuffle.each do |helper|
         require require "common/#{File.basename(helper, '.rb')}"
@@ -59,6 +61,12 @@ module Placemat::Rspec
     def enable_coveralls
       require 'coveralls'
       Coveralls.wear!
+    end
+
+    private
+
+    def rspec_root
+      Placemat::Project.current.rspec_root
     end
   end
 end

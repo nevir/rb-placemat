@@ -1,0 +1,11 @@
+{
+  "command": "ruby -I./lib -r./lib/placemat/zeus/plan -eZeus.go",
+
+  "plan": {
+    "boot": {
+      "preload_rspec": {
+        "rspec": []
+      }
+    }
+  }
+}
