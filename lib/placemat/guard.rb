@@ -49,7 +49,7 @@ module Placemat::Guard
     end
 
     def install_zeus_guard(&block)
-      guard :zeus_placemat do
+      guard :zeus_server do
         instance_eval(&block) if block
       end
     end
