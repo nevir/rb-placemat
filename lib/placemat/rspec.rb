@@ -1,4 +1,3 @@
-require 'rspec'
 require 'timeout'
 
 # RSpec related behavior.

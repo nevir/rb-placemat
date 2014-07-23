@@ -14,7 +14,8 @@ module Placemat::Guard
     DEFAULT_GUARDS = [
       :bundler,
       :zeus,
-      :rspec
+      :rspec,
+      :rubocop
     ]
 
     def dsl
@@ -115,7 +116,7 @@ module Placemat::Guard
     def rubocop_options
       {
         all_on_start: true,
-        cli: %w(--format clang --require rubocop-rspec)
+        cmd: %w(zeus rubocop)
       }
     end
   end

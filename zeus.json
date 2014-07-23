@@ -5,6 +5,9 @@
     "boot": {
       "preload_rspec": {
         "rspec": []
+      },
+      "preload_rubocop": {
+        "rubocop": []
       }
     }
   }
