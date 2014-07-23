@@ -1,6 +1,10 @@
+require 'rake'
+
 # Rake related behavior.
 module Placemat::Rake
   class << self
+    include ::Rake::DSL
+
     # A hack to make gems available to task files during load.
     attr_accessor :current_gem
 
@@ -9,7 +13,6 @@ module Placemat::Rake
       # execution (for quick help); but it's a real pain (due to rspec & other
       # externally loaded tasks).
       require 'bundler/setup'
-      require 'rake'
     end
 
     def default_configuration # rubocop:disable MethodLength

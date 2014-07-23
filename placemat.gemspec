@@ -23,7 +23,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
 
   gem.add_runtime_dependency 'bundler'
-  # TODO(nevir): byebug is Ruby 2+. Can we speecify conditional deps?
   gem.add_runtime_dependency 'byebug'
   gem.add_runtime_dependency 'git'
   gem.add_runtime_dependency 'guard'
@@ -32,7 +31,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'guard-rspec'
   gem.add_runtime_dependency 'guard-rubocop'
   gem.add_runtime_dependency 'guard-spork'
-  # gem.add_runtime_dependency 'guard-zeus'
   gem.add_runtime_dependency 'launchy'
   gem.add_runtime_dependency 'libnotify'
   gem.add_runtime_dependency 'mutant'
