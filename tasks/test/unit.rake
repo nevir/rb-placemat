@@ -6,7 +6,10 @@ namespace :test do
 
   desc 'Run the unit tests'
   RSpec::Core::RakeTask.new(:unit, [:focus]) do |task, task_args|
-    task.rspec_opts = ['--require', Placemat::Rspec.spec_helper_path]
+    task.rspec_opts = [
+      '--require', Placemat::Rspec.spec_helper_path,
+      '--format', 'documentation'
+    ]
 
     if task_args.focus
       focus_root = Placemat::Util.symbol_to_path(task_args.focus)
