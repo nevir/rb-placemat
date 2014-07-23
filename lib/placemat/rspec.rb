@@ -7,7 +7,7 @@ module Placemat::Rspec
       require 'rspec'
       require 'guard/rspec/formatter'
 
-      load rspec_root.join('spec_helper.rb')
+      load spec_helper_path
     end
 
     def default_configuration # rubocop:disable MethodLength
@@ -62,10 +62,12 @@ module Placemat::Rspec
       Coveralls.wear!
     end
 
-    private
-
     def rspec_root
       Placemat::Project.current.rspec_root
+    end
+
+    def spec_helper_path
+      rspec_root.join('spec_helper.rb')
     end
   end
 end
