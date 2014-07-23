@@ -3,20 +3,21 @@ require 'guard/plugin'
 require 'timeout'
 
 module Guard
+  # A Guard plugin that runs a Zeus server, and nothing else.
   class ZeusServer < Plugin
     DEFAULT_OPTIONS = {
-      cmd: ['zeus'],
-      boot_timeout: 10.0,
+      start_cmd: %w(zeus start),
+      boot_timeout: 10.0
     }
 
     def initialize(options = {})
       super(DEFAULT_OPTIONS.merge(options))
     end
 
-    def start
+    def start # rubocop:disable MethodLength
       stop
 
-      args = Array(options[:cmd]) + ['start']
+      args = Array(options[:start_cmd])
       UI.debug "Forking and running Zeus: #{args.inspect}"
 
       reader, writer = IO.pipe
@@ -32,7 +33,7 @@ module Guard
 
     def block_on_initial_output(reader)
       timeout(options[:boot_timeout]) do
-        while true do
+        loop do
           readers, _writers, _timeout = IO.select([reader], [], [], 1)
           break unless readers
           UI.debug readers[0].readline.strip
@@ -58,7 +59,7 @@ module Guard
       UI.debug 'Zeus stopped'
     end
 
-    def run_on_modifications(paths)
+    def run_on_modifications(_paths)
       reload
     end
   end
