@@ -6,7 +6,7 @@ namespace :test do
     ENV['COVERAGE'] = 'yes'
 
     begin
-      Rake::Task['test:all'].invoke
+      Rake::Task['test:unit'].invoke
     rescue
       ENV['COVERAGE'] = prev_coverage
     end
