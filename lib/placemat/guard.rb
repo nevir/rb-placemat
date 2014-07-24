@@ -30,6 +30,15 @@ module Placemat::Guard
       Placemat::Project.current
     end
 
+    def guardfile_path
+      project_guardfile_path = project.root.join('Guardfile')
+      if project_guardfile_path.exist?
+        project_guardfile_path
+      else
+        Placemat::CONFIG_PATH.join('Guardfile').to_s
+      end
+    end
+
     def default_configuration(&block)
       config = Placemat::Util::DSLConfigurator.new(&block)
       DEFAULT_GUARDS.each do |guard|

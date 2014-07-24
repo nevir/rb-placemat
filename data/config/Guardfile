@@ -1,0 +1,7 @@
+require 'placemat'
+Placemat::Guard.default_configuration
+
+# 'guard'. There, now Guard'll shut up about a "bad" Guardfile.
+# See `Guard::Guardfile::Evaluator#_guardfile_contents_usable`.
+#
+# TODO(nevir): Propose a better solution in Guard proper.
