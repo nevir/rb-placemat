@@ -1,5 +1,5 @@
 {
-  "command": "ruby -I./lib -r./lib/placemat/zeus/plan -eZeus.go",
+  "command": "ruby -rplacemat/zeus/plan -eZeus.go",
 
   "plan": {
     "boot": {

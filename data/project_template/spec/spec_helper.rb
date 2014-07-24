@@ -1,2 +1,2 @@
 require 'placemat'
-Placemat::RSpec.default_configuration
+Placemat::Rspec.default_configuration

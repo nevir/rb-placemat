@@ -54,8 +54,6 @@ class Placemat::CLI < Thor::Group
 
   def generate_current_project
     return if new_project?
-    template '.rspec'
-    template 'Guardfile'
     template 'Rakefile'
     template 'spec/spec_helper.rb', force: false
   end
@@ -72,6 +70,12 @@ class Placemat::CLI < Thor::Group
     say_status 'commit', "#{relative_project_root} (git changes)"
   rescue Git::GitExecuteError # rubocop:disable HandleExceptions
     # Nothing to commit.
+  end
+
+  def bundle
+    Dir.chdir(project_root) do
+      run 'bundle'
+    end
   end
 
   private
