@@ -1,1 +1,2 @@
-require 'placemat/rake/init'
+require 'placemat'
+Placemat::Rake.default_configuration
