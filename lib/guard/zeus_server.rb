@@ -14,17 +14,15 @@ module Guard
       super(DEFAULT_OPTIONS.merge(options))
     end
 
-    def start # rubocop:disable MethodLength
+    def start
       stop
 
-      args = Array(options[:start_cmd])
-      UI.debug "Forking and running Zeus: #{args.inspect}"
-
+      UI.debug "Forking and running Zeus: #{options[:start_cmd].inspect}"
       reader, writer = IO.pipe
       @pid = Process.fork do
         $stdout.reopen(writer)
         $stderr.reopen(writer)
-        exec(*args)
+        exec(*options[:start_cmd])
       end
 
       block_on_initial_output(reader)

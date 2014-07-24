@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'shellwords'
 require 'socket'
 
 # Guard related behavior.
@@ -13,7 +14,7 @@ module Placemat::Guard
     # Guards installed by default, and their order.
     DEFAULT_GUARDS = [
       :bundler,
-      :zeus,
+      :zeus_server,
       :rspec,
       :rubocop
     ]
@@ -49,8 +50,14 @@ module Placemat::Guard
       end
     end
 
-    def install_zeus_guard(&block)
-      guard :zeus_server do
+    def zeus_server_options
+      {
+        start_cmd: Placemat::Zeus.cmd_base + ['start']
+      }
+    end
+
+    def install_zeus_server_guard(&block)
+      guard :zeus_server, zeus_server_options do
         instance_eval(&block) if block
       end
     end
@@ -68,7 +75,7 @@ module Placemat::Guard
 
     def rspec_options
       {
-        cmd: 'zeus rspec',
+        cmd: "#{Shellwords.join(Placemat::Zeus.cmd_base)} rspec",
         all_on_start: true
       }
     end
@@ -116,7 +123,7 @@ module Placemat::Guard
     def rubocop_options
       {
         all_on_start: true,
-        cmd: %w(zeus rubocop)
+        cmd: Placemat::Zeus.cmd_base + ['rubocop']
       }
     end
   end
