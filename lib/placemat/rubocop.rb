@@ -8,7 +8,8 @@ module Placemat::Rubocop
 
     def runner_options
       [
-        '--require', 'rubocop-rspec'
+        '--require', 'rubocop-rspec',
+        '--display-cop-names'
       ]
     end
   end
