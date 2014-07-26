@@ -1,6 +1,3 @@
-# Current Version
-# ===============
-
 module <%= project_namespace %>
   # Version information for <%= project_namespace %>.
   module Version

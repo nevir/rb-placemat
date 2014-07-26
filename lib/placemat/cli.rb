@@ -73,6 +73,7 @@ class Placemat::CLI < Thor::Group
   end
 
   def bundle
+    return unless new_project?
     Dir.chdir(project_root) do
       run 'bundle'
     end

@@ -1,6 +1,3 @@
-# `<%= project_namespace %>` API
-# =<%= '=' * project_namespace.size %>=====
-
+# Top level namespace for <%= project_namespace %>.
 module <%= project_namespace %>
-
 end
