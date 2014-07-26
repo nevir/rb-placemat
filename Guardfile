@@ -4,7 +4,7 @@ else
   require 'placemat'
 end
 Placemat::Guard.default_configuration do
-  zeus do
+  zeus_server do
     watch('zeus.json')
     watch(%r{^lib/placemat/zeus.*\.rb$})
   end

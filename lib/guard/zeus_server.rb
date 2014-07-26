@@ -25,20 +25,33 @@ module Guard
         exec(*options[:start_cmd])
       end
 
-      block_on_initial_output(reader)
+      check_booted(reader)
       UI.info "#{self.class} is running"
     end
 
-    def block_on_initial_output(reader)
-      timeout(options[:boot_timeout]) do
-        loop do
-          readers, _writers, _timeout = IO.select([reader], [], [], 1)
-          break unless readers
-          UI.debug readers[0].readline.strip
-        end
-      end
+    def check_booted(reader)
+      lines = consume_output(reader)
+      check_boot_output(lines)
     rescue Timeout::Error
       UI.debug 'Timed out waiting for Zeus; letting it start in the background.'
+    end
+
+    def consume_output(reader)
+      lines = []
+      loop do
+        readers, _writers, _timeout = IO.select([reader], [], [], 1)
+        break unless readers
+        line = readers[0].readline
+        lines << line
+        UI.debug(line.strip)
+      end
+      lines
+    end
+
+    def check_boot_output(lines)
+      lines.each do |line|
+        fail lines.join if line.include? 'exit status'
+      end
     end
 
     def reload
