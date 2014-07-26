@@ -134,9 +134,10 @@ module Placemat::Guard
     end
 
     def rubocop_options
+      cmd_base = Placemat::Zeus.cmd_base + ['rubocop']
       {
         all_on_start: true,
-        cmd: Placemat::Zeus.cmd_base + ['rubocop']
+        cmd: cmd_base + Placemat::Rubocop.runner_options
       }
     end
   end
