@@ -66,6 +66,10 @@ module Placemat::Guard
     end
 
     def install_zeus_server_guard(&block)
+      # Make sure that Zeus' boot command has access to the correct copy of
+      # Placemat.
+      ENV['RUBYLIB'] = "#{Placemat::LIB_PATH}:#{ENV['RUBYLIB']}"
+
       guard :zeus_server, zeus_server_options do
         instance_eval(&block) if block
       end

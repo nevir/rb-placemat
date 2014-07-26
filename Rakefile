@@ -1,3 +1,3 @@
-ENV['RUBYLIB'] = File.expand_path('../lib', __FILE__) + ":#{ENV['RUBYLIB']}"
+$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 require 'placemat'
 Placemat::Rake.default_configuration
