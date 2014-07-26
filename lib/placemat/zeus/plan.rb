@@ -5,6 +5,7 @@ module Placemat
     # A Zeus plan to handle Placemat-enabled projects.
     class Plan < ::Zeus::Plan
       def boot
+        require 'bundler/setup'
         require 'placemat'
       end
 
