@@ -6,6 +6,7 @@ module Placemat::Rspec
     def preload
       require 'rspec'
       require 'guard/rspec/formatter'
+      Placemat::Simplecov.preload
 
       load spec_helper_path
     end
@@ -14,6 +15,7 @@ module Placemat::Rspec
       configure_environment
       set_default_configuration
       load_shared_behavior
+      configure_coverage
       # TODO(nevir): each_run.
       enable_coverage if ENV['COVERAGE']
     end
@@ -34,9 +36,11 @@ module Placemat::Rspec
         end
 
         # Time out specs (particularly useful for mutant)
-        config.around(:each) do |spec|
-          timeout(0.5) { spec.run }
-        end
+        #
+        # TODO(nevir): NOT WHEN DEBUGGING.
+        # config.around(:each) do |spec|
+        #   timeout(0.5) { spec.run }
+        # end
       end
     end
 
@@ -47,10 +51,12 @@ module Placemat::Rspec
       end
     end
 
-    def enable_coverage
-      require 'simplecov'
-      SimpleCov.start
+    def configure_coverage
+      Placemat::Simplecov.default_configuration
+    end
 
+    def enable_coverage
+      Placemat::Simplecov.start
       # Ensure accurate coverage by loading everything
       Placemat::Project.current.preload_lib
     end
