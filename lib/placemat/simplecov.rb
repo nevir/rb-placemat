@@ -9,6 +9,7 @@ module Placemat::Simplecov
       require 'simplecov'
       ::SimpleCov.configure do
         add_filter '/spec/'
+        add_filter '/data/'
       end
     end
 
