@@ -31,7 +31,7 @@ Placemat sets up [Guard](https://github.com/guard/guard) to watch _everything_
 related to your project. To develop against a Placemat-enabled project, your
 flow should be:
 
-1. Run `guard`.
+1. Run `rake` to start guard.
 2. Write code.
 
 That's it. Guard will watch your changes, run the appropriate tests, linters,
