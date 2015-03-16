@@ -1,2 +1,3 @@
+# Guard flips out if there is no string matching 'guard' in this file. guard.
 require 'placemat'
 Placemat::Guard.default_configuration

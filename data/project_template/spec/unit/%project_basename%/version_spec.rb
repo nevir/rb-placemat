@@ -1,7 +1,6 @@
 require '<%= q(project_basename) %>/version'
 
 describe <%= project_namespace %>::Version do
-
   it 'defines MAJOR' do
     expect(subject::MAJOR).to be_a(Numeric)
     expect(subject::MAJOR).to be >= 0
@@ -16,5 +15,4 @@ describe <%= project_namespace %>::Version do
     expect(subject::PATCH).to be_a(Numeric)
     expect(subject::PATCH).to be >= 0
   end
-
 end
