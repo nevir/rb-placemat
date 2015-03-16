@@ -5,7 +5,6 @@ module Placemat::Rspec
   class << self
     def preload
       require 'rspec'
-      require 'guard/rspec/formatter'
       Placemat::Simplecov.preload
 
       load spec_helper_path
