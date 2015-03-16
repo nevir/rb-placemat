@@ -1,5 +1,4 @@
 namespace :test do
-
   desc 'Run all tests with code coverage'
   task :coverage do
     prev_coverage = ENV['COVERAGE']
@@ -17,5 +16,4 @@ namespace :test do
       Launchy.open(path.to_s)
     end
   end
-
 end

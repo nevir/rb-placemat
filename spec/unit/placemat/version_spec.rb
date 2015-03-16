@@ -1,5 +1,4 @@
 describe Placemat::Version do
-
   it 'defines MAJOR' do
     expect(subject::MAJOR).to be_a(Numeric)
     expect(subject::MAJOR).to be >= 0
@@ -14,5 +13,4 @@ describe Placemat::Version do
     expect(subject::PATCH).to be_a(Numeric)
     expect(subject::PATCH).to be >= 0
   end
-
 end

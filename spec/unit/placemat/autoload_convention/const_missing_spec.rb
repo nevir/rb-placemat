@@ -1,5 +1,4 @@
 describe Placemat::AutoloadConvention, '#const_missing' do
-
   let(:namespace) do
     module Fixtures::AutoloadConvention; end
     Fixtures::AutoloadConvention.extend(subject)
@@ -52,5 +51,4 @@ describe Placemat::AutoloadConvention, '#const_missing' do
   def expect_load(path)
     expect(namespace).to receive(:load).with(path).and_call_original
   end
-
 end

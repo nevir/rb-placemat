@@ -1,1 +1,1 @@
-task :default => :guard
+task default: :guard

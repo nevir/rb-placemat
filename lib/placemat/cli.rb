@@ -84,11 +84,10 @@ class Placemat::CLI < Thor::Group
   def initialize(args = [], local_options = [], config = {}, &block)
     super(args, local_options, config, &block)
 
-    unless @path
-      self.class.help(shell)
-      fail Thor::Error, 'A path or ProjectName is required. ' \
-        'Perhaps you want to run `placemat .`?'
-    end
+    return if @path
+    self.class.help(shell)
+    fail Thor::Error, 'A path or ProjectName is required. ' \
+      'Perhaps you want to run `placemat .`?'
   end
 
   def template(source, config = {})

@@ -37,10 +37,9 @@ module Placemat
       @autoloaded_constants = []
 
       # Reload ourselves, as well.
-      if self == ::Placemat
-        load __FILE__
-        extend ::Placemat::AutoloadConvention
-      end
+      return unless self == ::Placemat
+      load __FILE__
+      extend ::Placemat::AutoloadConvention
     end
   end
 end

@@ -1,5 +1,3 @@
 namespace :test do
-
-  task :all => [:unit, :style]
-
+  task all: [:unit, :style]
 end

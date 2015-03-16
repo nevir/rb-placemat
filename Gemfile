@@ -1,2 +1,2 @@
 source 'https://rubygems.org'
-gemspec :name => 'placemat'
+gemspec name: 'placemat'

@@ -1,20 +1,17 @@
 AllCops:
   Exclude:
   - data/**/*
+  - spec/fixtures/**/*
 
-ClassAndModuleChildren:
+Metrics/AbcSize:
+  Max: 20
+
+Style/ClassAndModuleChildren:
   Enabled: false
 
-Documentation:
+Style/TrivialAccessors:
+  ExactNameMatch: true
+
+Style/Documentation:
   Exclude:
   - spec/**/*
-
-GuardClause:
-  Enabled: false
-
-TrivialAccessors:
-  AllowPredicates: true
-
-# TODO: Isn't this already default?
-LineLength:
-  Max: 80
