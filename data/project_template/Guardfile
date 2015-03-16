@@ -1,0 +1,2 @@
+require 'placemat'
+Placemat::Guard.default_configuration
